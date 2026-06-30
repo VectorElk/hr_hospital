@@ -1,0 +1,43 @@
+<odoo noupdate="1">
+    <record id="hr_hospital_doctor_demo_house" model="hr.hospital.doctor">
+        <field name="name">Gregory House</field>
+        <field name="position">Head of Diagnostic Medicine</field>
+        <field name="is_family_doctor">False</field>
+    </record>
+
+    <record id="hr_hospital_doctor_demo_wilson" model="hr.hospital.doctor">
+        <field name="name">James Wilson</field>
+        <field name="position">Head of Oncology</field>
+        <field name="is_family_doctor">True</field>
+    </record>
+
+    <record id="hr_hospital_doctor_demo_cuddy" model="hr.hospital.doctor">
+        <field name="name">Lisa Cuddy</field>
+        <field name="position">Dean of Medicine</field>
+        <field name="is_family_doctor">False</field>
+    </record>
+
+    <record id="hr_hospital_patient_demo_andi" model="hr.hospital.patient">
+        <field name="name">Andi</field>
+        <field name="emergency_contact">Megan</field>
+        <field name="insurance_contact">Princeton Plainsboro Insurance Desk</field>
+        <field name="age">29</field>
+        <field name="family_doctor_id" ref="hr_hospital_doctor_demo_wilson"/>
+    </record>
+
+    <record id="hr_hospital_patient_demo_mark" model="hr.hospital.patient">
+        <field name="name">Mark Warner</field>
+        <field name="emergency_contact">Elaine Warner</field>
+        <field name="insurance_contact">PPTH Health Plan</field>
+        <field name="age">47</field>
+        <field name="family_doctor_id" ref="hr_hospital_doctor_demo_wilson"/>
+    </record>
+
+    <record id="hr_hospital_patient_demo_julia" model="hr.hospital.patient">
+        <field name="name">Julia Reyes</field>
+        <field name="emergency_contact">Carlos Reyes</field>
+        <field name="insurance_contact">Garden State Mutual</field>
+        <field name="age">35</field>
+        <field name="family_doctor_id" ref="hr_hospital_doctor_demo_wilson"/>
+    </record>
+</odoo>

@@ -1,0 +1,17 @@
+<odoo noupdate="1">
+    <record id="hr_hospital_condition_demo_lupus" model="hr.hospital.condition">
+        <field name="name">Lupus</field>
+        <field name="description">House keeps suspecting it, but this time it is actually lupus.</field>
+    </record>
+
+    <record id="hr_hospital_condition_demo_sarcoidosis" model="hr.hospital.condition">
+        <field name="name">Sarcoidosis</field>
+        <field name="description">Classic differential diagnosis in a difficult House-style case.</field>
+    </record>
+
+    <record id="hr_hospital_condition_demo_vasculitis" model="hr.hospital.condition">
+        <field name="name">Vasculitis</field>
+        <field name="description">Another serious condition often considered during diagnostic puzzles.</field>
+    </record>
+</odoo>
+

@@ -1,2 +1,2 @@
-# odoo_school_2
-Odoo school task 2
+Odoo School: Task 2
+-----------
