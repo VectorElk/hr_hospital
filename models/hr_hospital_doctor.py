@@ -1,10 +1,7 @@
-import logging
-
 from odoo import fields, models
 
-_logger = logging.getLogger(__name__)
 
-class HRHospitalDoctor(models.Model):
+class HrHospitalDoctor(models.Model):
     _name = 'hr.hospital.doctor'
     _description = 'Hospital Doctor'
 
@@ -16,6 +13,7 @@ class HRHospitalDoctor(models.Model):
         inverse_name='family_doctor_id',
     )
 
-    res_visit_ids = fields.Many2one(
+    res_visit_ids = fields.One2many(
         comodel_name='hr.hospital.visit',
+        inverse_name='res_doctor_id',
     )

@@ -1,8 +1,5 @@
-import logging
-
 from odoo import fields, models
 
-_logger = logging.getLogger(__name__)
 
 class HrHospitalCondition(models.Model):
     _name = 'hr.hospital.condition'
@@ -10,3 +7,5 @@ class HrHospitalCondition(models.Model):
 
     name = fields.Char(required=True)
     description = fields.Char(required=True)
+
+    res_visit_ids = fields.Many2many('hr.hospital.visit')
