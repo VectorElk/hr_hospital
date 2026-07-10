@@ -6,8 +6,9 @@
             <list>
                 <field name="name"/>
                 <field name="position"/>
-                <field name="res_patient_ids"/>
-                <field name="res_visit_ids" widget="one2many_tags"/>
+                <field name="is_family_doctor"/>
+                <field name="is_intern"/>
+                <field name="res_doctor_category_id"/>
             </list>
         </field>
     </record>
@@ -23,12 +24,26 @@
                             <field name="name"/>
                             <field name="position"/>
                             <field name="is_family_doctor"/>
+                            <field name="res_doctor_category_id"/>
+                            <field name="is_intern" readonly="1"/>
+                            <field name="res_mentor_id" domain="[('is_intern', '=', False)]" readonly="not is_intern"/>
+                            <field name="res_system_user_id"/>
                         </group>
                         <group>
-                            <field name="res_patient_ids"/>
-                            <field name="res_visit_ids"  widget="one2many_tags"/>
+                            <field name="res_patient_ids" widget="many2many_tags"/>
                         </group>
                     </group>
+                    <notebook>
+                        <page string="Visits">
+                            <field name="res_visit_ids">
+                                <list>
+                                    <field name="date"/>
+                                    <field name="res_patient_id"/>
+                                    <field name="status"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>

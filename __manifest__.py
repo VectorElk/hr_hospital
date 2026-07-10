@@ -5,7 +5,7 @@
     'website': 'https://odoo.school/',
     'category': 'Human Resources',
     'license': 'OPL-1',
-    'version': '19.0.0.0.0',
+    'version': '19.0.3.0.0',
 
     'data': [
         'security/ir.model.access.csv',
@@ -15,6 +15,8 @@
         'views/hr_hospital_condition_views.xml',
         'views/hr_hospital_visit_views.xml',
         'views/hr_hospital_main_menu.xml',
+        'wizard/hr_hospital_mass_reassign_doctor_wizard_views.xml',
+        'wizard/hr_hospital_visit_report_wizard_views.xml',
     ],
 
     'demo': [
