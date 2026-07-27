@@ -32,3 +32,4 @@ class HrHospitalDoctorHistory(models.Model):
                     'message': 'Doctor change date cannot be earlier than assignment date.',
                 }
             }
+        return None

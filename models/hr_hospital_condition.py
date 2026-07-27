@@ -9,11 +9,9 @@ class HrHospitalCondition(models.Model):
     name = fields.Char(required=True)
     description = fields.Char(required=True)
 
-    res_visit_ids = fields.Many2many('hr.hospital.visit')
+    res_visit_ids = fields.One2many('hr.hospital.visit', 'condition_id')
 
-    parent_id = fields.Many2one('hr.hospital.condition', string='Parent Condition', ondelete='cascade')
-    display_name = fields.Char(compute='_compute_display_name', store=False)
-
+    parent_id = fields.Many2one('hr.hospital.condition', string='Parent Condition', ondelete='restrict')
     @api.depends('parent_id', 'name')
     def _compute_display_name(self):
         for record in self:
@@ -32,15 +30,5 @@ class HrHospitalCondition(models.Model):
 
     @api.constrains('parent_id')
     def _check_no_hierarchy_loop(self):
-        for record in self:
-            if not record.parent_id:
-                continue
-
-            visited = set()
-            current = record.parent_id
-
-            while current:
-                if current.id in visited:
-                    raise ValidationError('Circular hierarchy detected: condition cannot be its own ancestor.')
-                visited.add(current.id)
-                current = current.parent_id
+        if self._has_cycle():
+            raise ValidationError('Circular hierarchy detected: condition cannot be its own ancestor.')

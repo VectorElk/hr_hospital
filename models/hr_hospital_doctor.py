@@ -12,13 +12,6 @@ class HrHospitalDoctor(models.Model):
     is_family_doctor = fields.Boolean(default=False)
     is_intern = fields.Boolean(compute='_compute_is_intern', store=True)
 
-    @api.depends('res_doctor_category_id', 'res_doctor_category_id.name')
-    def _compute_is_intern(self):
-        intern_category = self.env.ref('hr_hospital.hr_hospital_doctor_category_intern', raise_if_not_found=False)
-        intern_category_id = intern_category.id if intern_category else False
-        for record in self:
-            record.is_intern = bool(record.res_doctor_category_id.id == intern_category_id)
-
     res_patient_ids = fields.One2many(
         comodel_name='hr.hospital.patient',
         inverse_name='family_doctor_id',
@@ -46,6 +39,15 @@ class HrHospitalDoctor(models.Model):
     def _onchange_is_intern(self):
         if not self.is_intern:
             self.res_mentor_id = False
+
+    @api.depends('res_doctor_category_id', 'res_doctor_category_id.name')
+    def _compute_is_intern(self):
+        intern_category = self.env.ref(
+            'hr_hospital.hr_hospital_doctor_category_intern', raise_if_not_found=False
+        )
+        intern_category_id = intern_category.id if intern_category else False
+        for record in self:
+            record.is_intern = bool(record.res_doctor_category_id.id == intern_category_id)
 
     @api.constrains('is_intern', 'res_mentor_id')
     def _check_mentor_rules(self):

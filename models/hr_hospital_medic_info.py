@@ -16,8 +16,8 @@ class HrHospitalMedicInfo(models.AbstractModel):
         ('ab_neg', 'AB(IV) Rh-'),
     ])
     gender = fields.Selection([
-        ("0", "Male"),
-        ("1", "Female"),
+        ("male", "Male"),
+        ("female", "Female"),
     ])
     birth_date = fields.Date()
     age = fields.Integer(compute='_compute_age')

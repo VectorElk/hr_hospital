@@ -18,15 +18,3 @@ class HrHospitalDoctorCategory(models.Model):
         'unique(name)',
         'The name of the doctor category must be unique.',
     )
-
-    def init(self):
-        super().init()
-        seed_values = {
-            'hr_hospital.hr_hospital_doctor_category_intern': ('Doctor Intern', 10),
-            'hr_hospital.hr_hospital_doctor_category_specialist': ('Doctor Specialist', 20),
-            'hr_hospital.hr_hospital_doctor_category_highest': ('Doctor Highest Category', 30),
-        }
-        for xmlid, (name, sequence) in seed_values.items():
-            category = self.env.ref(xmlid, raise_if_not_found=False)
-            if category and (category.name != name or category.sequence != sequence):
-                category.write({'name': name, 'sequence': sequence})

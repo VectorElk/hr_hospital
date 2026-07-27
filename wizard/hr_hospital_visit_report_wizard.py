@@ -1,7 +1,5 @@
-from datetime import date
-from typing import cast
 
-from odoo import api, fields, models
+from odoo import Command, api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -29,8 +27,8 @@ class HrHospitalVisitReportWizard(models.TransientModel):
     def _check_date_range(self):
         for record in self:
             if record.date_start and record.date_end:
-                start_date = cast('date', record.date_start)
-                end_date = cast('date', record.date_end)
+                start_date = record.date_start
+                end_date = record.date_end
                 if start_date > end_date:
                     raise ValidationError('Date Start must be earlier than or equal to Date End.')
 
@@ -47,9 +45,9 @@ class HrHospitalVisitReportWizard(models.TransientModel):
         active_records = self.env[active_model].browse(active_ids)
 
         if active_model == 'hr.hospital.doctor' and 'doctor_ids' in fields_list:
-            result['doctor_ids'] = [(6, 0, active_records.ids)]
+            result['doctor_ids'] = [Command.set(active_records.ids)]
         if active_model == 'hr.hospital.patient' and 'patient_ids' in fields_list:
-            result['patient_ids'] = [(6, 0, active_records.ids)]
+            result['patient_ids'] = [Command.set(active_records.ids)]
 
         return result
 

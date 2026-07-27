@@ -11,39 +11,15 @@ class HrHospitalVisit(models.Model):
     visit_time = fields.Datetime(default=fields.Datetime.now)
     summary = fields.Html(required=True)
     status = fields.Selection([
-        ('0', 'Planned'),
-        ('1', 'Completed'),
-        ('2', 'Canceled'),
+        ('planned', 'Planned'),
+        ('completed', 'Completed'),
+        ('canceled', 'Canceled'),
     ])
     active = fields.Boolean(default=True)
 
     res_patient_id = fields.Many2one('hr.hospital.patient')
     res_doctor_id = fields.Many2one('hr.hospital.doctor')
     condition_id = fields.Many2one('hr.hospital.condition', string='Condition')
-
-    def init(self):
-        super().init()
-        self.env.cr.execute("""
-            SELECT EXISTS (
-                SELECT 1
-                FROM information_schema.tables
-                WHERE table_name = 'hr_hospital_condition_hr_hospital_visit_rel'
-            )
-        """)
-        if not self.env.cr.fetchone()[0]:
-            return
-
-        self.env.cr.execute("""
-            UPDATE hr_hospital_visit AS visit
-               SET condition_id = rel.hr_hospital_condition_id
-              FROM (
-                    SELECT hr_hospital_visit_id, MIN(hr_hospital_condition_id) AS hr_hospital_condition_id
-                      FROM hr_hospital_condition_hr_hospital_visit_rel
-                     GROUP BY hr_hospital_visit_id
-                   ) AS rel
-             WHERE visit.id = rel.hr_hospital_visit_id
-               AND visit.condition_id IS NULL
-        """)
 
     def write(self, vals):
         protected_fields = {'date', 'planned_date', 'visit_time', 'res_doctor_id'}

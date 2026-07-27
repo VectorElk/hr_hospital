@@ -26,7 +26,7 @@
                             <field name="is_family_doctor"/>
                             <field name="res_doctor_category_id"/>
                             <field name="is_intern" readonly="1"/>
-                            <field name="res_mentor_id" domain="[('is_intern', '=', False)]" readonly="not is_intern"/>
+                            <field name="res_mentor_id" domain="[('is_intern', '=', False)]" invisible="not is_intern"/>
                             <field name="res_system_user_id"/>
                         </group>
                         <group>
