@@ -106,7 +106,7 @@
         <field name="status">completed</field>
         <field name="res_patient_id" ref="hr_hospital_patient_demo_andi"/>
         <field name="res_doctor_id" ref="hr_hospital_doctor_demo_house"/>
-        <field name="condition_id" ref="hr_hospital_condition_lupus"/>
+        <field name="res_condition_id" ref="hr_hospital_condition_lupus"/>
     </record>
 
     <record id="hr_hospital_visit_demo_case_02" model="hr.hospital.visit">
@@ -117,7 +117,7 @@
         <field name="status">completed</field>
         <field name="res_patient_id" ref="hr_hospital_patient_demo_mark"/>
         <field name="res_doctor_id" ref="hr_hospital_doctor_demo_wilson"/>
-        <field name="condition_id" ref="hr_hospital_condition_vasculitis"/>
+        <field name="res_condition_id" ref="hr_hospital_condition_vasculitis"/>
     </record>
 
     <record id="hr_hospital_visit_demo_case_03" model="hr.hospital.visit">
@@ -128,7 +128,7 @@
         <field name="status">planned</field>
         <field name="res_patient_id" ref="hr_hospital_patient_demo_julia"/>
         <field name="res_doctor_id" ref="hr_hospital_doctor_demo_house"/>
-        <field name="condition_id" ref="hr_hospital_condition_sarcoidosis"/>
+        <field name="res_condition_id" ref="hr_hospital_condition_sarcoidosis"/>
     </record>
 
     <record id="hr_hospital_visit_demo_case_04" model="hr.hospital.visit">
@@ -139,7 +139,7 @@
         <field name="status">canceled</field>
         <field name="res_patient_id" ref="hr_hospital_patient_demo_andi"/>
         <field name="res_doctor_id" ref="hr_hospital_doctor_demo_wilson"/>
-        <field name="condition_id" ref="hr_hospital_condition_lupus"/>
+        <field name="res_condition_id" ref="hr_hospital_condition_lupus"/>
     </record>
 
     <record id="hr_hospital_visit_demo_case_05" model="hr.hospital.visit">
@@ -150,7 +150,7 @@
         <field name="status">completed</field>
         <field name="res_patient_id" ref="hr_hospital_patient_demo_mark"/>
         <field name="res_doctor_id" ref="hr_hospital_doctor_demo_house"/>
-        <field name="condition_id" ref="hr_hospital_condition_vasculitis"/>
+        <field name="res_condition_id" ref="hr_hospital_condition_vasculitis"/>
     </record>
 
     <record id="hr_hospital_visit_demo_case_06" model="hr.hospital.visit">
@@ -161,7 +161,7 @@
         <field name="status">planned</field>
         <field name="res_patient_id" ref="hr_hospital_patient_demo_julia"/>
         <field name="res_doctor_id" ref="hr_hospital_doctor_demo_cuddy"/>
-        <field name="condition_id" ref="hr_hospital_condition_sarcoidosis"/>
+        <field name="res_condition_id" ref="hr_hospital_condition_sarcoidosis"/>
     </record>
 
     <record id="hr_hospital_visit_demo_case_07" model="hr.hospital.visit">
@@ -172,7 +172,7 @@
         <field name="status">planned</field>
         <field name="res_patient_id" ref="hr_hospital_patient_demo_andi"/>
         <field name="res_doctor_id" ref="hr_hospital_doctor_demo_cameron"/>
-        <field name="condition_id" ref="hr_hospital_condition_lupus_cutaneous"/>
+        <field name="res_condition_id" ref="hr_hospital_condition_lupus_cutaneous"/>
     </record>
 
     <record id="hr_hospital_visit_demo_case_08" model="hr.hospital.visit">
@@ -183,7 +183,7 @@
         <field name="status">completed</field>
         <field name="res_patient_id" ref="hr_hospital_patient_demo_mark"/>
         <field name="res_doctor_id" ref="hr_hospital_doctor_demo_chase"/>
-        <field name="condition_id" ref="hr_hospital_condition_sarcoidosis_pulmonary"/>
+        <field name="res_condition_id" ref="hr_hospital_condition_sarcoidosis_pulmonary"/>
     </record>
 
     <record id="hr_hospital_visit_demo_case_09" model="hr.hospital.visit">
@@ -194,7 +194,7 @@
         <field name="status">canceled</field>
         <field name="res_patient_id" ref="hr_hospital_patient_demo_julia"/>
         <field name="res_doctor_id" ref="hr_hospital_doctor_demo_wilson"/>
-        <field name="condition_id" ref="hr_hospital_condition_vasculitis_systemic"/>
+        <field name="res_condition_id" ref="hr_hospital_condition_vasculitis_systemic"/>
     </record>
 
     <record id="hr_hospital_visit_demo_case_10" model="hr.hospital.visit">
@@ -205,7 +205,7 @@
         <field name="status">completed</field>
         <field name="res_patient_id" ref="hr_hospital_patient_demo_andi"/>
         <field name="res_doctor_id" ref="hr_hospital_doctor_demo_house"/>
-        <field name="condition_id" ref="hr_hospital_condition_sarcoidosis_cardiac"/>
+        <field name="res_condition_id" ref="hr_hospital_condition_sarcoidosis_cardiac"/>
     </record>
 
     <record id="hr_hospital_visit_demo_case_11" model="hr.hospital.visit">
@@ -216,7 +216,7 @@
         <field name="status">planned</field>
         <field name="res_patient_id" ref="hr_hospital_patient_demo_mark"/>
         <field name="res_doctor_id" ref="hr_hospital_doctor_demo_cuddy"/>
-        <field name="condition_id" ref="hr_hospital_condition_lupus_erythematosus"/>
+        <field name="res_condition_id" ref="hr_hospital_condition_lupus_erythematosus"/>
     </record>
 
     <record id="hr_hospital_visit_demo_case_12" model="hr.hospital.visit">
@@ -227,7 +227,7 @@
         <field name="status">completed</field>
         <field name="res_patient_id" ref="hr_hospital_patient_demo_julia"/>
         <field name="res_doctor_id" ref="hr_hospital_doctor_demo_chase"/>
-        <field name="condition_id" ref="hr_hospital_condition_vasculitis"/>
+        <field name="res_condition_id" ref="hr_hospital_condition_vasculitis"/>
     </record>
 
     <record id="hr_hospital_doctor_history_demo_01" model="hr.hospital.doctor.history">

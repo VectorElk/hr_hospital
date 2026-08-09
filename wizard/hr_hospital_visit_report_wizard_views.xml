@@ -8,7 +8,7 @@
                     <group>
                         <group>
                             <field name="doctor_ids" widget="many2many_tags"/>
-                            <field name="condition_ids" widget="many2many_tags"/>
+                            <field name="res_condition_ids" widget="many2many_tags"/>
                         </group>
                         <group>
                             <field name="date_start"/>
@@ -24,7 +24,7 @@
         </field>
     </record>
 
-    <record id="action_visit_report_wizard_doctor" model="ir.actions.act_window">
+    <record id="action_hr_hospital_visit_report_wizard" model="ir.actions.act_window">
         <field name="name">Visit Report</field>
         <field name="res_model">hr.hospital.visit.report.wizard</field>
         <field name="view_mode">form</field>

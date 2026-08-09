@@ -10,7 +10,7 @@ class HrHospitalVisitReportWizard(models.TransientModel):
         comodel_name='hr.hospital.doctor',
         string='Doctors',
     )
-    condition_ids = fields.Many2many(
+    res_condition_ids = fields.Many2many(
         comodel_name='hr.hospital.condition',
         string='Conditions',
     )
@@ -52,8 +52,8 @@ class HrHospitalVisitReportWizard(models.TransientModel):
             domain.append(('date', '>=', self.date_start))
         if self.date_end:
             domain.append(('date', '<=', self.date_end))
-        if self.condition_ids:
-            domain.append(('condition_id', 'in', self.condition_ids.ids))
+        if self.res_condition_ids:
+            domain.append(('res_condition_id', 'in', self.res_condition_ids.ids))
 
         return {
             'type': 'ir.actions.act_window',
@@ -64,6 +64,6 @@ class HrHospitalVisitReportWizard(models.TransientModel):
             'domain': domain,
             'context': {
                 **self.env.context,
-                'group_by': 'condition_id',
+                'group_by': 'res_condition_id',
             },
         }

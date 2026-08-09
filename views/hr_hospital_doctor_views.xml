@@ -95,17 +95,32 @@
                 <field name="res_doctor_category_id"/>
                 <field name="is_intern"/>
                 <field name="is_family_doctor"/>
+                <field name="intern_count"/>
+                <field name="intern_display_names"/>
                 <templates>
+                    <t t-name="menu">
+                        <a role="menuitem" type="open" class="dropdown-item">Open</a>
+                        <a role="menuitem" type="object" name="action_quick_create_visit" class="dropdown-item">Schedule Visit</a>
+                        <a role="menuitem" t-if="widget.deletable" type="delete" class="dropdown-item">Delete</a>
+                    </t>
                     <t t-name="card">
                         <div class="oe_kanban_global_click">
-                            <div><strong><field name="name"/></strong></div>
-                            <div><field name="position"/></div>
-                            <div><field name="res_doctor_category_id"/></div>
+                            <div class="fw-bold fs-5"><field name="name"/></div>
+                            <div class="text-muted"><field name="position"/></div>
+                            <div>
+                                <span class="fw-bold">Qualification:</span>
+                                <field name="res_doctor_category_id"/>
+                            </div>
                             <div>
                                 <field name="is_intern" widget="boolean_toggle" options="{'readonly': True}"/>
                                 <span> Intern</span>
                             </div>
+                            <div t-if="record.intern_count.raw_value">
+                                <span class="fw-bold">Interns:</span>
+                                <field name="intern_display_names"/>
+                            </div>
                             <div>
+                                <a type="open" role="button" class="btn btn-secondary btn-sm">Open</a>
                                 <button name="action_quick_create_visit"
                                         type="object"
                                         string="Schedule Visit"

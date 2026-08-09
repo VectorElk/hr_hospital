@@ -9,7 +9,7 @@
                 <field name="status"/>
                 <field name="res_patient_id"/>
                 <field name="res_doctor_id"/>
-                <field name="condition_id"/>
+                <field name="res_condition_id"/>
             </list>
         </field>
     </record>
@@ -24,7 +24,7 @@
                             type="object"
                             class="oe_stat_button"
                             icon="fa-stethoscope"
-                            invisible="not id or not condition_id">
+                            invisible="not id or not res_condition_id">
                         <field name="same_condition_visit_count"
                                widget="statinfo"
                                string=" Same Condition Visits"/>
@@ -44,7 +44,7 @@
                         <group string="Participants">
                             <field name="res_patient_id"/>
                             <field name="res_doctor_id"/>
-                            <field name="condition_id"/>
+                            <field name="res_condition_id"/>
                         </group>
                     </group>
                     <group string="Summary">
@@ -66,7 +66,7 @@
             <search string="Search Visits">
                 <field name="res_patient_id"/>
                 <field name="res_doctor_id"/>
-                <field name="condition_id"/>
+                <field name="res_condition_id"/>
                 <field name="date"/>
                 <filter string="Planned Date" name="planned_date" date="planned_date" default_period="year"/>
                 <filter string="Active" name="active" domain="[('active', '=', True)]"/>
@@ -99,7 +99,7 @@
         <field name="arch" type="xml">
             <graph string="Visits by Month" type="bar" stacked="1">
                 <field name="planned_date" interval="month" type="row"/>
-                <field name="condition_id" type="col"/>
+                <field name="res_condition_id" type="col"/>
             </graph>
         </field>
     </record>
@@ -110,11 +110,11 @@
         <field name="arch" type="xml">
             <calendar string="Visits"
                       date_start="planned_date"
-                      color="condition_id"
+                      color="res_condition_id"
                       mode="month">
                 <field name="res_patient_id"/>
                 <field name="res_doctor_id"/>
-                <field name="condition_id"/>
+                <field name="res_condition_id"/>
                 <field name="status"/>
             </calendar>
         </field>

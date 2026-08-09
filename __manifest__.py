@@ -1,3 +1,4 @@
+# ruff: noqa
 {
     'name': 'HR Hospital',
     'summary': 'HR Hospital module for odoo.school',
@@ -10,6 +11,7 @@
     'data': [
         'security/ir.model.access.csv',
         'data/hr_hospital_condition_data.xml',
+        'report/hr_hospital_doctor_report_templates.xml',
         'views/hr_hospital_doctor_views.xml',
         'views/hr_hospital_patient_views.xml',
         'views/hr_hospital_condition_views.xml',

@@ -19,33 +19,43 @@ class HrHospitalVisit(models.Model):
 
     res_patient_id = fields.Many2one('hr.hospital.patient')
     res_doctor_id = fields.Many2one('hr.hospital.doctor')
-    condition_id = fields.Many2one('hr.hospital.condition', string='Condition')
+    condition_id = fields.Many2one(
+        'hr.hospital.condition',
+        string='Condition (Legacy)',
+    )
+    res_condition_id = fields.Many2one(
+        'hr.hospital.condition',
+        related='condition_id',
+        string='Condition',
+        store=True,
+        readonly=False,
+    )
     same_condition_visit_count = fields.Integer(compute='_compute_same_condition_visit_count')
 
     def _compute_same_condition_visit_count(self):
         counts = {}
-        condition_ids = self.mapped('condition_id').ids
+        condition_ids = self.mapped('res_condition_id').ids
         if condition_ids:
             grouped_data = self.read_group(
-                [('condition_id', 'in', condition_ids)],
-                ['condition_id'],
-                ['condition_id'],
+                [('res_condition_id', 'in', condition_ids)],
+                ['res_condition_id'],
+                ['res_condition_id'],
             )
             for data in grouped_data:
-                condition = data.get('condition_id')
+                condition = data.get('res_condition_id')
                 if condition:
-                    counts[condition[0]] = data['condition_id_count']
+                    counts[condition[0]] = data['res_condition_id_count']
 
         for record in self:
-            record.same_condition_visit_count = counts.get(record.condition_id.id, 0)
+            record.same_condition_visit_count = counts.get(record.res_condition_id.id, 0)
 
     def action_view_same_condition_visits(self):
         self.ensure_one()
         action = self.env['ir.actions.act_window']._for_xml_id('hr_hospital.action_hr_hospital_visit_window')
-        action['domain'] = [('condition_id', '=', self.condition_id.id)] if self.condition_id else [('id', '=', False)]
+        action['domain'] = [('res_condition_id', '=', self.res_condition_id.id)] if self.res_condition_id else [('id', '=', False)]
         action['context'] = {
             **self.env.context,
-            'default_condition_id': self.condition_id.id,
+            'default_res_condition_id': self.res_condition_id.id,
         }
         return action
 
