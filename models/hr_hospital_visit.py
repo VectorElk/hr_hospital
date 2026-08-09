@@ -31,14 +31,10 @@ class HrHospitalVisit(models.Model):
                 ['condition_id'],
                 ['condition_id'],
             )
-            counts = {
-                condition_id: count
-                for condition_id, count in (
-                    (data['condition_id'][0], data['condition_id_count'])
-                    for data in grouped_data
-                    if data.get('condition_id')
-                )
-            }
+            for data in grouped_data:
+                condition = data.get('condition_id')
+                if condition:
+                    counts[condition[0]] = data['condition_id_count']
 
         for record in self:
             record.same_condition_visit_count = counts.get(record.condition_id.id, 0)
