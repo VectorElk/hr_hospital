@@ -1,0 +1,148 @@
+<odoo>
+    <record id="paperformat_hr_hospital_doctor_report_a4" model="report.paperformat">
+        <field name="name">HR Hospital Doctor Report A4</field>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">28</field>
+        <field name="margin_bottom">26</field>
+        <field name="margin_left">12</field>
+        <field name="margin_right">12</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">12</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="action_hr_hospital_doctor_report" model="ir.actions.report">
+        <field name="name">Doctor Report</field>
+        <field name="model">hr.hospital.doctor</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hr_hospital.hr_hospital_doctor_report_document</field>
+        <field name="report_file">hr_hospital.hr_hospital_doctor_report_document</field>
+        <field name="print_report_name">'Doctor - %s' % (object.name or '')</field>
+        <field name="paperformat_id" ref="paperformat_hr_hospital_doctor_report_a4"/>
+        <field name="binding_model_id" ref="hr_hospital.model_hr_hospital_doctor"/>
+        <field name="binding_type">report</field>
+        <field name="binding_view_types">list,form</field>
+    </record>
+
+    <template id="hr_hospital_external_layout_doctor" inherit_id="web.external_layout_standard">
+        <xpath expr="//div[contains(@t-attf-class, 'header o_company_')]" position="replace">
+            <div class="header" style="border-bottom: 1px solid #ddd; padding-bottom: 8px;">
+                <div style="display: flex; align-items: center; gap: 14px;">
+                    <t t-if="logo_data_uri">
+                        <img t-att-src="logo_data_uri" alt="Company logo" style="height: 46px; width: 46px; object-fit: contain;"/>
+                    </t>
+                    <t t-elif="company.logo">
+                        <img t-att-src="image_data_uri(company.logo)" alt="Company logo" style="height: 46px; width: 46px; object-fit: contain;"/>
+                    </t>
+                    <div style="font-size: 12px; line-height: 1.4;">
+                        <div><strong t-esc="company.name"/></div>
+                        <div t-if="company.partner_id.phone">Phone: <span t-esc="company.partner_id.phone"/></div>
+                        <div t-if="company.partner_id.email">Email: <span t-esc="company.partner_id.email"/></div>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="//div[contains(@t-attf-class, 'article o_report_layout_standard')]" position="replace">
+            <div t-attf-class="article o_report_layout_standard o_table_standard o_company_#{company.id}_layout o_snail_mail {{'o_report_layout_background' if company.layout_background != 'Blank' else ''}}"
+                 t-attf-style="{{ 'background-image: url(%s);' % layout_background_url if layout_background_url else '' }}"
+                 t-att-data-oe-model="o and o._name"
+                 t-att-data-oe-id="o and o.id"
+                 t-att-data-oe-lang="o and o.env.context.get('lang')">
+                <t t-out="0"/>
+            </div>
+        </xpath>
+        <xpath expr="//div[contains(@t-attf-class, 'footer o_company_')]" position="replace">
+            <div class="footer" style="border-top: 1px solid #ddd; padding-top: 4px; font-size: 10px; color: #666;">
+                <div>
+                    Printed at: <span t-esc="generated_on.strftime('%Y-%m-%d %H:%M')"/>
+                </div>
+                <div t-if="company.partner_id.city">
+                    City: <span t-esc="company.partner_id.city"/>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="hr_hospital_doctor_report_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-set="visits" t-value="visit_lines_by_doctor.get(o.id, o.res_visit_ids)"/>
+                <t t-set="patients" t-value="patient_lines_by_doctor.get(o.id, o.res_patient_ids)"/>
+                <t t-call="hr_hospital.hr_hospital_external_layout_doctor">
+                    <div class="page hr-hospital-doctor-report">
+                        <style>
+                            .hr-hospital-doctor-report { padding-top: 14mm; }
+                            .hr-hospital-report-title { font-size: 18px; font-weight: 700; margin: 4px 0 8px; }
+                            .hr-hospital-section-title { font-size: 14px; font-weight: 700; margin: 14px 0 8px; }
+                            .hr-hospital-status-planned { background: #fff3cd; color: #664d03; }
+                            .hr-hospital-status-completed { background: #d1e7dd; color: #0f5132; }
+                            .hr-hospital-status-canceled { background: #f8d7da; color: #842029; }
+                        </style>
+
+                        <div class="hr-hospital-report-title">
+                            <span t-esc="o.name"/>
+                            <span> - </span>
+                            <span t-esc="o.position"/>
+                        </div>
+
+                        <div class="hr-hospital-section-title">Visit history</div>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Patient</th>
+                                    <th>Condition</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="visits" t-as="visit">
+                                    <tr>
+                                        <td>
+                                            <span t-field="visit.planned_date" t-options='{"widget": "datetime"}'/>
+                                        </td>
+                                        <td><span t-esc="visit.res_patient_id.name or ''"/></td>
+                                        <td><span t-esc="visit.res_condition_id.display_name or visit.res_condition_id.name or ''"/></td>
+                                        <td>
+                                            <span t-attf-class="badge #{'hr-hospital-status-planned' if visit.status == 'planned' else 'hr-hospital-status-completed' if visit.status == 'completed' else 'hr-hospital-status-canceled' if visit.status == 'canceled' else ''}" t-esc="visit.status and visit.status.capitalize() or ''"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <tr t-if="not visits">
+                                    <td colspan="4" class="text-muted">No visit history found.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="hr-hospital-section-title">Patients</div>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Full Name</th>
+                                    <th>Gender</th>
+                                    <th>Birth Date</th>
+                                    <th>Phone</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="patients" t-as="patient">
+                                    <tr>
+                                        <td><span t-esc="patient.name or ''"/></td>
+                                        <td><span t-esc="patient.gender or ''"/></td>
+                                        <td><span t-field="patient.birth_date"/></td>
+                                        <td><span t-esc="patient.phone or ''"/></td>
+                                    </tr>
+                                </t>
+                                <tr t-if="not patients">
+                                    <td colspan="4" class="text-muted">No patients found.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

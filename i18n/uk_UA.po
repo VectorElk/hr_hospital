@@ -1,0 +1,381 @@
+# Ukrainian translation for hr_hospital module
+# Copyright (C) 2024 by Ihor Los
+# This file is distributed under the same license as the HR Hospital module.
+
+msgid ""
+msgstr ""
+"Project-Id-Version: HR Hospital 19.0.3.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-08-10 00:00:00+0000\n"
+"PO-Revision-Date: 2024-08-10 00:00:00+0000\n"
+"Last-Translator: Your Name <your.email@example.com>\n"
+"Language-Team: Ukrainian <uk@li.org>\n"
+"Language: uk_UA\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+# Module metadata
+msgid "HR Hospital"
+msgstr "Лікувально-профілактичне закладу"
+
+msgid "HR Hospital module for odoo.school"
+msgstr "Модуль лікувально-профілактичного закладу для odoo.school"
+
+# Menu items
+msgid "Doctors"
+msgstr "Лікарі"
+
+msgid "Patients"
+msgstr "Пацієнти"
+
+msgid "Conditions"
+msgstr "Хвороби/Умови"
+
+msgid "Visits"
+msgstr "Відвідування"
+
+# Model descriptions
+msgid "Hospital Visit"
+msgstr "Відвідування лікувального закладу"
+
+msgid "Hospital Patient"
+msgstr "Пацієнт лікувального закладу"
+
+msgid "Hospital Doctor"
+msgstr "Лікар лікувального закладу"
+
+msgid "Hospital Condition"
+msgstr "Хвороба/Умова лікувального закладу"
+
+msgid "Hospital Doctor Category"
+msgstr "Категорія лікаря лікувального закладу"
+
+msgid "Hospital Doctor History"
+msgstr "Історія лікаря лікувального закладу"
+
+msgid "Hospital Medic Info"
+msgstr "Медична інформація лікувального закладу"
+
+# Field labels - hr.hospital.visit
+msgid "Date"
+msgstr "Дата"
+
+msgid "Planned Date"
+msgstr "Запланована дата"
+
+msgid "Visit Time"
+msgstr "Час відвідування"
+
+msgid "Summary"
+msgstr "Резюме"
+
+msgid "Status"
+msgstr "Статус"
+
+msgid "Active"
+msgstr "Активний"
+
+msgid "Condition"
+msgstr "Хвороба"
+
+msgid "Condition (Legacy)"
+msgstr "Хвороба (Застаріла)"
+
+msgid "Patient"
+msgstr "Пацієнт"
+
+msgid "Doctor"
+msgstr "Лікар"
+
+msgid "Same Condition Visits"
+msgstr "Відвідування з такою ж хворобою"
+
+# Field labels - hr.hospital.patient
+msgid "First Name"
+msgstr "Ім'я"
+
+msgid "Last Name"
+msgstr "Прізвище"
+
+msgid "Gender"
+msgstr "Стать"
+
+msgid "Birth Date"
+msgstr "Дата народження"
+
+msgid "Age"
+msgstr "Вік"
+
+msgid "Phone"
+msgstr "Телефон"
+
+msgid "Blood Type"
+msgstr "Група крові"
+
+msgid "Family Doctor"
+msgstr "Сімейний лікар"
+
+# Field labels - hr.hospital.doctor
+msgid "Name"
+msgstr "Назва"
+
+msgid "Position"
+msgstr "Посада"
+
+msgid "Is Family Doctor"
+msgstr "Є сімейним лікарем"
+
+msgid "Is Intern"
+msgstr "Є стажером"
+
+msgid "Intern"
+msgstr "Стажер"
+
+msgid "Interns"
+msgstr "Стажери"
+
+msgid "Category"
+msgstr "Категорія"
+
+msgid "Doctor Category"
+msgstr "Категорія лікаря"
+
+msgid "Mentor"
+msgstr "Наставник"
+
+msgid "Mentors"
+msgstr "Наставники"
+
+msgid "System User"
+msgstr "Системний користувач"
+
+# Field labels - hr.hospital.condition
+msgid "Description"
+msgstr "Опис"
+
+msgid "Parent Condition"
+msgstr "Батьківська хвороба"
+
+# Disease/Condition names
+msgid "Lupus"
+msgstr "Люпус"
+
+msgid "House keeps suspecting it, but this time it is actually lupus."
+msgstr "Хаус завжди це підозрює, але цього разу це насправді люпус."
+
+msgid "Sarcoidosis"
+msgstr "Саркоїдоз"
+
+msgid "Classic differential diagnosis in a difficult House-style case."
+msgstr "Класичний диференціальний діагноз у складному випадку в стилі Хауса."
+
+msgid "Vasculitis"
+msgstr "Васкуліт"
+
+msgid "Another serious condition often considered during diagnostic puzzles."
+msgstr "Ще один серйозний стан, який часто розглядається під час діагностичних головоломок."
+
+# Doctor categories
+msgid "Doctor Intern"
+msgstr "Лікар-стажер"
+
+msgid "Doctor Specialist"
+msgstr "Лікар-спеціаліст"
+
+msgid "Doctor Highest Category"
+msgstr "Лікар найвищої категорії"
+
+# Status options
+msgid "Planned"
+msgstr "Запланований"
+
+msgid "Completed"
+msgstr "Завершено"
+
+msgid "Canceled"
+msgstr "Скасовано"
+
+# View labels
+msgid "Search Doctors"
+msgstr "Пошук лікарів"
+
+msgid "Search Visits"
+msgstr "Пошук відвідувань"
+
+msgid "Search Patients"
+msgstr "Пошук пацієнтів"
+
+msgid "Search Conditions"
+msgstr "Пошук хвороб"
+
+msgid "Schedule"
+msgstr "Розклад"
+
+msgid "Participants"
+msgstr "Учасники"
+
+msgid "Active"
+msgstr "Активний"
+
+msgid "Archived"
+msgstr "Архівовано"
+
+# View page titles
+msgid "Visits"
+msgstr "Відвідування"
+
+# Buttons
+msgid "New Visit"
+msgstr "Нове відвідування"
+
+msgid "Print"
+msgstr "Друк"
+
+# Security groups
+msgid "Hospital Role"
+msgstr "Роль лікувального закладу"
+
+msgid "Hospital Patient"
+msgstr "Пацієнт лікувального закладу"
+
+msgid "Hospital Intern"
+msgstr "Стажер лікувального закладу"
+
+msgid "Hospital Doctor"
+msgstr "Лікар лікувального закладу"
+
+msgid "Hospital Manager"
+msgstr "Менеджер лікувального закладу"
+
+msgid "Hospital Administrator"
+msgstr "Адміністратор лікувального закладу"
+
+# Error messages
+msgid "Cannot change schedule or doctor for completed visits."
+msgstr "Неможливо змінити розклад або лікаря для завершених відвідувань."
+
+msgid "Cannot archive completed visits."
+msgstr "Неможливо архівувати завершені відвідування."
+
+msgid "Cannot delete completed visits."
+msgstr "Неможливо видалити завершені відвідування."
+
+msgid "Doctor cannot be their own mentor."
+msgstr "Лікар не може бути власним наставником."
+
+msgid "Only intern doctors can have a mentor."
+msgstr "Тільки лікарі-стажери можуть мати наставника."
+
+msgid "Mentor cannot be an intern doctor."
+msgstr "Наставник не може бути лікарем-стажером."
+
+msgid "Circular hierarchy detected: condition cannot be its own ancestor."
+msgstr "Циклічна ієрархія виявлена: хвороба не може бути власним предком."
+
+# Additional view field strings
+msgid "Search by full name"
+msgstr "Пошук за повним ім'ям"
+
+msgid "Search by phone"
+msgstr "Пошук за телефоном"
+
+msgid "Add visit summary..."
+msgstr "Додати резюме відвідування..."
+
+msgid "Doctor"
+msgstr "Лікар"
+
+# Wizard strings
+msgid "Visit Report Wizard"
+msgstr "Майстер звіту про відвідування"
+
+msgid "Mass Reassign Doctor to Patients"
+msgstr "Масова переназначення лікаря пацієнтам"
+
+msgid "Date From"
+msgstr "Дата з"
+
+msgid "Date To"
+msgstr "Дата по"
+
+msgid "New Doctor"
+msgstr "Новий лікар"
+
+msgid "Date Changed"
+msgstr "Дата змінення"
+
+msgid "Select the doctor to assign to selected patients"
+msgstr "Виберіть лікаря для призначення обраним пацієнтам"
+
+msgid "Effective date for the doctor reassignment"
+msgstr "Дата набуття чинності для переназначення лікаря"
+
+msgid "Date Start must be earlier than or equal to Date End."
+msgstr "Дата початку має бути раніше або дорівнювати даті завершення."
+
+msgid "No patients selected for reassignment."
+msgstr "Не вибрано пацієнтів для переназначення."
+
+msgid "Visit Report"
+msgstr "Звіт про відвідування"
+
+msgid "Open Report"
+msgstr "Відкрити звіт"
+
+msgid "Cancel"
+msgstr "Скасувати"
+
+msgid "Success"
+msgstr "Успіх"
+
+msgid "Successfully reassigned %s patient(s) to Dr. %s"
+msgstr "Успішно переназначено %s пацієнта(ів) до лікаря %s"
+
+# Additional model descriptions
+msgid "Hospital Doctor Qualification Category"
+msgstr "Категорія кваліфікації лікаря лікувального закладу"
+
+msgid "Patient Medical Information"
+msgstr "Медична інформація пацієнта"
+
+msgid "History of personal doctors"
+msgstr "Історія персональних лікарів"
+
+msgid "The name of the doctor category must be unique."
+msgstr "Назва категорії лікаря має бути унікальною."
+
+# Warning messages
+msgid "Warning"
+msgstr "Попередження"
+
+msgid "Doctor change date cannot be earlier than assignment date."
+msgstr "Дата зміни лікаря не може бути раніше дати призначення."
+
+# Gender options
+msgid "Male"
+msgstr "Чоловіча"
+
+msgid "Female"
+msgstr "Жіноча"
+
+# Additional view strings
+msgid "Schedule Visit"
+msgstr "Розпланувати відвідування"
+
+msgid "Personal Info"
+msgstr "Особиста інформація"
+
+msgid "Contact & Doctors"
+msgstr "Контакти та лікарі"
+
+msgid "Doctor History"
+msgstr "Історія лікаря"
+
+msgid "Condition Tree"
+msgstr "Дерево хвороб"
+
+msgid "Associated Visits"
+msgstr "Пов'язані відвідування"
+

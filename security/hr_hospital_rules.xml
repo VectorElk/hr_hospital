@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="access__hr_hospital_visit__group_user" model="ir.model.access">
+        <field name="name">access__hr_hospital_visit__group_user</field>
+        <field name="model_id" ref="model_hr_hospital_visit"/>
+        <field name="group_id" ref="hr_hospital.group_hr_hospital_patient"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="access__hr_hospital_visit__group_hr_hospital_intern" model="ir.model.access">
+        <field name="name">access__hr_hospital_visit__group_hr_hospital_intern</field>
+        <field name="model_id" ref="model_hr_hospital_visit"/>
+        <field name="group_id" ref="hr_hospital.group_hr_hospital_intern"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="access__hr_hospital_visit__group_hr_hospital_doctor" model="ir.model.access">
+        <field name="name">access__hr_hospital_visit__group_hr_hospital_doctor</field>
+        <field name="model_id" ref="model_hr_hospital_visit"/>
+        <field name="group_id" ref="hr_hospital.group_hr_hospital_doctor"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="access__hr_hospital_visit__group_hr_hospital_manager" model="ir.model.access">
+        <field name="name">access__hr_hospital_visit__group_hr_hospital_manager</field>
+        <field name="model_id" ref="model_hr_hospital_visit"/>
+        <field name="group_id" ref="hr_hospital.group_hr_hospital_manager"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="access__hr_hospital_visit__group_hr_hospital_administrator" model="ir.model.access">
+        <field name="name">access__hr_hospital_visit__group_hr_hospital_administrator</field>
+        <field name="model_id" ref="model_hr_hospital_visit"/>
+        <field name="group_id" ref="hr_hospital.group_hr_hospital_administrator"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="access__hr_hospital_visit__group_system" model="ir.model.access">
+        <field name="name">access__hr_hospital_visit__group_system</field>
+        <field name="model_id" ref="model_hr_hospital_visit"/>
+        <field name="group_id" ref="base.group_system"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="hr_hospital_visit_rule_patient_own_read" model="ir.rule">
+        <field name="name">hr.hospital.visit.patient.own.read</field>
+        <field name="model_id" ref="model_hr_hospital_visit"/>
+        <field name="domain_force">[('res_patient_id.res_system_user_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('hr_hospital.group_hr_hospital_patient'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="hr_hospital_visit_rule_intern_all" model="ir.rule">
+        <field name="name">hr.hospital.visit.intern.own.write</field>
+        <field name="model_id" ref="model_hr_hospital_visit"/>
+        <field name="domain_force">[('res_doctor_id.res_system_user_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('hr_hospital.group_hr_hospital_intern'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="hr_hospital_visit_rule_doctor_all" model="ir.rule">
+        <field name="name">hr.hospital.visit.doctor.own.and.interns</field>
+        <field name="model_id" ref="model_hr_hospital_visit"/>
+        <field name="domain_force">['|', ('res_doctor_id.res_system_user_id', '=', user.id), ('res_doctor_id.res_mentor_id.res_system_user_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('hr_hospital.group_hr_hospital_doctor'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="hr_hospital_visit_rule_manager_all" model="ir.rule">
+        <field name="name">hr.hospital.visit.manager.all</field>
+        <field name="model_id" ref="model_hr_hospital_visit"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('hr_hospital.group_hr_hospital_manager'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="hr_hospital_visit_rule_administrator_all" model="ir.rule">
+        <field name="name">hr.hospital.visit.administrator.all</field>
+        <field name="model_id" ref="model_hr_hospital_visit"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('hr_hospital.group_hr_hospital_administrator'))]"/>
+    </record>
+
+    <record id="hr_hospital_visit_rule_system_all" model="ir.rule">
+        <field name="name">hr.hospital.visit.system.all</field>
+        <field name="model_id" ref="model_hr_hospital_visit"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('base.group_system'))]"/>
+    </record>
+</odoo>
+

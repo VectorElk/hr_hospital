@@ -1,9 +1,14 @@
-from odoo import fields, models
+from odoo import _, fields, models
 
 
 class HrHospitalDoctorCategory(models.Model):
+    """Doctor qualification/certification levels.
+
+    Categories include Doctor Intern, Specialist, Highest Category, etc.
+    Used to classify doctors and determine intern eligibility.
+    """
     _name = 'hr.hospital.doctor.category'
-    _description = 'Hospital Doctor Qualification Category'
+    _description = _('Hospital Doctor Qualification Category')
     _order = 'sequence, name'
 
     name = fields.Char(required=True)
@@ -16,5 +21,5 @@ class HrHospitalDoctorCategory(models.Model):
 
     _name_uniq = models.Constraint(
         'unique(name)',
-        'The name of the doctor category must be unique.',
+        _('The name of the doctor category must be unique.'),
     )
