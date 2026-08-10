@@ -38,6 +38,7 @@ plus reporting, role-based access, and Ukrainian translations.
 
     'installable': True,
     'auto_install': False,
+    'application': False,
 
     'icon': 'hr_hospital/static/description/icon.png',
     'images': [
