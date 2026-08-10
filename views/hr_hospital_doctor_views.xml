@@ -1,5 +1,5 @@
 <odoo>
-    <record id="hr_hospital_doctor_views_tree" model="ir.ui.view">
+    <record id="hr_hospital_doctor_tree" model="ir.ui.view">
         <field name="name">hr.hospital.doctor.tree</field>
         <field name="model">hr.hospital.doctor</field>
         <field name="arch" type="xml">
@@ -13,7 +13,21 @@
         </field>
     </record>
 
-    <record id="view_hr_hospital_doctor_form" model="ir.ui.view">
+    <record id="hr_hospital_doctor_search" model="ir.ui.view">
+        <field name="name">hr.hospital.doctor.search</field>
+        <field name="model">hr.hospital.doctor</field>
+        <field name="arch" type="xml">
+            <search string="Search Doctors">
+                <field name="name"/>
+                <field name="position"/>
+                <field name="res_doctor_category_id"/>
+                <filter string="Mentors" name="mentors" domain="[('res_intern_ids', '!=', False)]"/>
+                <filter string="Interns" name="interns" domain="[('is_intern', '=', True)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="hr_hospital_doctor_form" model="ir.ui.view">
         <field name="name">hr.hospital.doctor.form</field>
         <field name="model">hr.hospital.doctor</field>
         <field name="arch" type="xml">
@@ -23,6 +37,10 @@
                         <group>
                             <field name="name"/>
                             <field name="position"/>
+                            <field name="gender"/>
+                            <field name="birth_date"/>
+                            <field name="age" readonly="1"/>
+                            <field name="blood_type"/>
                             <field name="is_family_doctor"/>
                             <field name="res_doctor_category_id"/>
                             <field name="is_intern" readonly="1"/>
@@ -43,9 +61,75 @@
                                 </list>
                             </field>
                         </page>
+                        <page string="Interns" invisible="not res_intern_ids">
+                            <field name="res_intern_ids" nolabel="1" context="{'default_res_mentor_id': id}">
+                                <kanban>
+                                    <field name="name"/>
+                                    <field name="position"/>
+                                    <field name="res_doctor_category_id"/>
+                                    <templates>
+                                        <t t-name="card">
+                                            <div class="oe_kanban_global_click">
+                                                <div><strong><field name="name"/></strong></div>
+                                                <div><field name="position"/></div>
+                                                <div><field name="res_doctor_category_id"/></div>
+                                            </div>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                            </field>
+                        </page>
                     </notebook>
                 </sheet>
             </form>
+        </field>
+    </record>
+
+    <record id="hr_hospital_doctor_kanban" model="ir.ui.view">
+        <field name="name">hr.hospital.doctor.kanban</field>
+        <field name="model">hr.hospital.doctor</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="res_doctor_category_id">
+                <field name="name"/>
+                <field name="position"/>
+                <field name="res_doctor_category_id"/>
+                <field name="is_intern"/>
+                <field name="is_family_doctor"/>
+                <field name="intern_count"/>
+                <field name="intern_display_names"/>
+                <templates>
+                    <t t-name="menu">
+                        <a role="menuitem" type="open" class="dropdown-item">Open</a>
+                        <a role="menuitem" type="object" name="action_quick_create_visit" class="dropdown-item">Schedule Visit</a>
+                        <a role="menuitem" t-if="widget.deletable" type="delete" class="dropdown-item">Delete</a>
+                    </t>
+                    <t t-name="card">
+                        <div class="oe_kanban_global_click">
+                            <div class="fw-bold fs-5"><field name="name"/></div>
+                            <div class="text-muted"><field name="position"/></div>
+                            <div>
+                                <span class="fw-bold">Qualification:</span>
+                                <field name="res_doctor_category_id"/>
+                            </div>
+                            <div>
+                                <field name="is_intern" widget="boolean_toggle" options="{'readonly': True}"/>
+                                <span> Intern</span>
+                            </div>
+                            <div t-if="record.intern_count.raw_value">
+                                <span class="fw-bold">Interns:</span>
+                                <field name="intern_display_names"/>
+                            </div>
+                            <div>
+                                <a type="open" role="button" class="btn btn-secondary btn-sm">Open</a>
+                                <button name="action_quick_create_visit"
+                                        type="object"
+                                        string="Schedule Visit"
+                                        class="btn btn-primary btn-sm mt8"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
         </field>
     </record>
 
@@ -53,6 +137,29 @@
         <field name="name">Doctor</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">hr.hospital.doctor</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="search_view_id" ref="hr_hospital_doctor_search"/>
+        <field name="context">{'group_by': 'res_doctor_category_id'}</field>
+    </record>
+
+    <record id="action_hr_hospital_doctor_window_list_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="hr_hospital_doctor_tree"/>
+        <field name="act_window_id" ref="action_hr_hospital_doctor_window"/>
+    </record>
+
+    <record id="action_hr_hospital_doctor_window_kanban_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="hr_hospital_doctor_kanban"/>
+        <field name="act_window_id" ref="action_hr_hospital_doctor_window"/>
+    </record>
+
+    <record id="action_hr_hospital_doctor_window_form_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="3"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="hr_hospital_doctor_form"/>
+        <field name="act_window_id" ref="action_hr_hospital_doctor_window"/>
     </record>
 </odoo>

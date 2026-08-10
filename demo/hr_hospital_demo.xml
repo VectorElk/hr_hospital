@@ -4,18 +4,44 @@
         <field name="name">Gregory House</field>
         <field name="position">Head of Diagnostic Medicine</field>
         <field name="is_family_doctor">False</field>
+        <field name="res_doctor_category_id" ref="hr_hospital_doctor_category_highest"/>
     </record>
 
     <record id="hr_hospital_doctor_demo_wilson" model="hr.hospital.doctor">
         <field name="name">James Wilson</field>
         <field name="position">Head of Oncology</field>
         <field name="is_family_doctor">True</field>
+        <field name="res_doctor_category_id" ref="hr_hospital_doctor_category_specialist"/>
     </record>
 
     <record id="hr_hospital_doctor_demo_cuddy" model="hr.hospital.doctor">
         <field name="name">Lisa Cuddy</field>
         <field name="position">Dean of Medicine</field>
         <field name="is_family_doctor">False</field>
+        <field name="res_doctor_category_id" ref="hr_hospital_doctor_category_highest"/>
+    </record>
+
+    <record id="hr_hospital_doctor_demo_foreman" model="hr.hospital.doctor">
+        <field name="name">Eric Foreman</field>
+        <field name="position">Senior Diagnostics Mentor</field>
+        <field name="is_family_doctor">False</field>
+        <field name="res_doctor_category_id" ref="hr_hospital_doctor_category_specialist"/>
+    </record>
+
+    <record id="hr_hospital_doctor_demo_cameron" model="hr.hospital.doctor">
+        <field name="name">Allison Cameron</field>
+        <field name="position">Diagnostic Medicine Intern</field>
+        <field name="is_family_doctor">False</field>
+        <field name="res_doctor_category_id" ref="hr_hospital_doctor_category_intern"/>
+        <field name="res_mentor_id" ref="hr_hospital_doctor_demo_house"/>
+    </record>
+
+    <record id="hr_hospital_doctor_demo_chase" model="hr.hospital.doctor">
+        <field name="name">Robert Chase</field>
+        <field name="position">Diagnostic Medicine Intern</field>
+        <field name="is_family_doctor">False</field>
+        <field name="res_doctor_category_id" ref="hr_hospital_doctor_category_intern"/>
+        <field name="res_mentor_id" ref="hr_hospital_doctor_demo_foreman"/>
     </record>
 
     <record id="hr_hospital_patient_demo_andi" model="hr.hospital.patient">
@@ -77,10 +103,10 @@
         <field name="planned_date">2026-05-31 09:00:00</field>
         <field name="visit_time">2026-06-01 09:15:00</field>
         <field name="summary" type="html"><p>House opens with his classic line: "Everybody lies." Differential starts with lupus.</p></field>
-        <field name="status">1</field>
+        <field name="status">completed</field>
         <field name="res_patient_id" ref="hr_hospital_patient_demo_andi"/>
         <field name="res_doctor_id" ref="hr_hospital_doctor_demo_house"/>
-        <field name="condition_id" ref="hr_hospital_condition_lupus"/>
+        <field name="res_condition_id" ref="hr_hospital_condition_lupus"/>
     </record>
 
     <record id="hr_hospital_visit_demo_case_02" model="hr.hospital.visit">
@@ -88,10 +114,10 @@
         <field name="planned_date">2026-06-02 10:30:00</field>
         <field name="visit_time">2026-06-02 11:00:00</field>
         <field name="summary" type="html"><p>Wilson reviews labs while House insists the pattern points to vasculitis.</p></field>
-        <field name="status">1</field>
+        <field name="status">completed</field>
         <field name="res_patient_id" ref="hr_hospital_patient_demo_mark"/>
         <field name="res_doctor_id" ref="hr_hospital_doctor_demo_wilson"/>
-        <field name="condition_id" ref="hr_hospital_condition_vasculitis"/>
+        <field name="res_condition_id" ref="hr_hospital_condition_vasculitis"/>
     </record>
 
     <record id="hr_hospital_visit_demo_case_03" model="hr.hospital.visit">
@@ -99,10 +125,10 @@
         <field name="planned_date">2026-06-03 14:00:00</field>
         <field name="visit_time">2026-06-03 14:45:00</field>
         <field name="summary" type="html"><p>Cuddy demands a treatment plan before House runs another dangerous test.</p></field>
-        <field name="status">0</field>
+        <field name="status">planned</field>
         <field name="res_patient_id" ref="hr_hospital_patient_demo_julia"/>
         <field name="res_doctor_id" ref="hr_hospital_doctor_demo_house"/>
-        <field name="condition_id" ref="hr_hospital_condition_sarcoidosis"/>
+        <field name="res_condition_id" ref="hr_hospital_condition_sarcoidosis"/>
     </record>
 
     <record id="hr_hospital_visit_demo_case_04" model="hr.hospital.visit">
@@ -110,10 +136,10 @@
         <field name="planned_date">2026-06-04 08:00:00</field>
         <field name="visit_time">2026-06-04 08:30:00</field>
         <field name="summary" type="html"><p>The team debates sarcoidosis versus lupus while House checks for hidden toxin exposure.</p></field>
-        <field name="status">2</field>
+        <field name="status">canceled</field>
         <field name="res_patient_id" ref="hr_hospital_patient_demo_andi"/>
         <field name="res_doctor_id" ref="hr_hospital_doctor_demo_wilson"/>
-        <field name="condition_id" ref="hr_hospital_condition_lupus"/>
+        <field name="res_condition_id" ref="hr_hospital_condition_lupus"/>
     </record>
 
     <record id="hr_hospital_visit_demo_case_05" model="hr.hospital.visit">
@@ -121,10 +147,10 @@
         <field name="planned_date">2026-06-05 16:00:00</field>
         <field name="visit_time">2026-06-05 16:20:00</field>
         <field name="summary" type="html"><p>House catches a subtle symptom in clinic and redirects the case back to vasculitis.</p></field>
-        <field name="status">1</field>
+        <field name="status">completed</field>
         <field name="res_patient_id" ref="hr_hospital_patient_demo_mark"/>
         <field name="res_doctor_id" ref="hr_hospital_doctor_demo_house"/>
-        <field name="condition_id" ref="hr_hospital_condition_vasculitis"/>
+        <field name="res_condition_id" ref="hr_hospital_condition_vasculitis"/>
     </record>
 
     <record id="hr_hospital_visit_demo_case_06" model="hr.hospital.visit">
@@ -132,10 +158,76 @@
         <field name="planned_date">2026-06-06 10:00:00</field>
         <field name="visit_time">2026-06-06 10:10:00</field>
         <field name="summary" type="html"><p>Final board review: Cuddy signs off after House proves the diagnosis was never lupus this time.</p></field>
-        <field name="status">0</field>
+        <field name="status">planned</field>
         <field name="res_patient_id" ref="hr_hospital_patient_demo_julia"/>
         <field name="res_doctor_id" ref="hr_hospital_doctor_demo_cuddy"/>
-        <field name="condition_id" ref="hr_hospital_condition_sarcoidosis"/>
+        <field name="res_condition_id" ref="hr_hospital_condition_sarcoidosis"/>
+    </record>
+
+    <record id="hr_hospital_visit_demo_case_07" model="hr.hospital.visit">
+        <field name="date">2026-06-07</field>
+        <field name="planned_date">2026-06-07 09:30:00</field>
+        <field name="visit_time">2026-06-07 09:40:00</field>
+        <field name="summary" type="html"><p>Cameron reviews autoimmune markers while House asks for one more exposure history pass.</p></field>
+        <field name="status">planned</field>
+        <field name="res_patient_id" ref="hr_hospital_patient_demo_andi"/>
+        <field name="res_doctor_id" ref="hr_hospital_doctor_demo_cameron"/>
+        <field name="res_condition_id" ref="hr_hospital_condition_lupus_cutaneous"/>
+    </record>
+
+    <record id="hr_hospital_visit_demo_case_08" model="hr.hospital.visit">
+        <field name="date">2026-06-08</field>
+        <field name="planned_date">2026-06-08 11:00:00</field>
+        <field name="visit_time">2026-06-08 11:20:00</field>
+        <field name="summary" type="html"><p>Chase performs follow-up imaging and confirms pulmonary changes are improving.</p></field>
+        <field name="status">completed</field>
+        <field name="res_patient_id" ref="hr_hospital_patient_demo_mark"/>
+        <field name="res_doctor_id" ref="hr_hospital_doctor_demo_chase"/>
+        <field name="res_condition_id" ref="hr_hospital_condition_sarcoidosis_pulmonary"/>
+    </record>
+
+    <record id="hr_hospital_visit_demo_case_09" model="hr.hospital.visit">
+        <field name="date">2026-06-09</field>
+        <field name="planned_date">2026-06-09 13:30:00</field>
+        <field name="visit_time">2026-06-09 13:50:00</field>
+        <field name="summary" type="html"><p>Wilson cancels the session after a medication interaction alert requires rescheduling.</p></field>
+        <field name="status">canceled</field>
+        <field name="res_patient_id" ref="hr_hospital_patient_demo_julia"/>
+        <field name="res_doctor_id" ref="hr_hospital_doctor_demo_wilson"/>
+        <field name="res_condition_id" ref="hr_hospital_condition_vasculitis_systemic"/>
+    </record>
+
+    <record id="hr_hospital_visit_demo_case_10" model="hr.hospital.visit">
+        <field name="date">2026-06-10</field>
+        <field name="planned_date">2026-06-10 15:00:00</field>
+        <field name="visit_time">2026-06-10 15:30:00</field>
+        <field name="summary" type="html"><p>House signs off after biopsy confirms cardiac sarcoidosis was the missing clue.</p></field>
+        <field name="status">completed</field>
+        <field name="res_patient_id" ref="hr_hospital_patient_demo_andi"/>
+        <field name="res_doctor_id" ref="hr_hospital_doctor_demo_house"/>
+        <field name="res_condition_id" ref="hr_hospital_condition_sarcoidosis_cardiac"/>
+    </record>
+
+    <record id="hr_hospital_visit_demo_case_11" model="hr.hospital.visit">
+        <field name="date">2026-06-11</field>
+        <field name="planned_date">2026-06-11 08:45:00</field>
+        <field name="visit_time">2026-06-11 09:05:00</field>
+        <field name="summary" type="html"><p>Cuddy reviews compliance and asks Cameron to prepare a conservative follow-up plan.</p></field>
+        <field name="status">planned</field>
+        <field name="res_patient_id" ref="hr_hospital_patient_demo_mark"/>
+        <field name="res_doctor_id" ref="hr_hospital_doctor_demo_cuddy"/>
+        <field name="res_condition_id" ref="hr_hospital_condition_lupus_erythematosus"/>
+    </record>
+
+    <record id="hr_hospital_visit_demo_case_12" model="hr.hospital.visit">
+        <field name="date">2026-06-12</field>
+        <field name="planned_date">2026-06-12 17:00:00</field>
+        <field name="visit_time">2026-06-12 17:10:00</field>
+        <field name="summary" type="html"><p>Chase closes the chart after symptoms resolve and no relapse signs are found.</p></field>
+        <field name="status">completed</field>
+        <field name="res_patient_id" ref="hr_hospital_patient_demo_julia"/>
+        <field name="res_doctor_id" ref="hr_hospital_doctor_demo_chase"/>
+        <field name="res_condition_id" ref="hr_hospital_condition_vasculitis"/>
     </record>
 
     <record id="hr_hospital_doctor_history_demo_01" model="hr.hospital.doctor.history">

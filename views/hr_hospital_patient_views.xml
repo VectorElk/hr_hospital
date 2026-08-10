@@ -1,5 +1,5 @@
 <odoo>
-    <record id="hr_hospital_patient_views_tree" model="ir.ui.view">
+    <record id="hr_hospital_patient_tree" model="ir.ui.view">
         <field name="name">hr.hospital.patient.tree</field>
         <field name="model">hr.hospital.patient</field>
         <field name="arch" type="xml">
@@ -16,12 +16,28 @@
         </field>
     </record>
 
-    <record id="view_hr_hospital_patient_form" model="ir.ui.view">
+    <record id="hr_hospital_patient_form" model="ir.ui.view">
         <field name="name">hr.hospital.patient.form</field>
         <field name="model">hr.hospital.patient</field>
         <field name="arch" type="xml">
             <form>
+                <header>
+                    <button name="action_quick_create_visit"
+                            type="object"
+                            string="Schedule Visit"
+                            class="btn-primary"
+                            invisible="not id"/>
+                </header>
                 <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_patient_visits"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-calendar"
+                                invisible="not id">
+                            <field name="visit_count" widget="statinfo" string="Visits"/>
+                        </button>
+                    </div>
                     <group>
                         <group string="Personal Info">
                             <field name="name"/>
@@ -31,6 +47,7 @@
                             <field name="blood_type"/>
                         </group>
                         <group string="Contact &amp; Doctors">
+                            <field name="phone"/>
                             <field name="insurance_contact"/>
                             <field name="insurance_policy_number"/>
                             <field name="emergency_contact"/>
@@ -63,10 +80,26 @@
         </field>
     </record>
 
+    <record id="hr_hospital_patient_search" model="ir.ui.view">
+        <field name="name">hr.hospital.patient.search</field>
+        <field name="model">hr.hospital.patient</field>
+        <field name="arch" type="xml">
+            <search string="Search Patients">
+                <field name="name" string="Full Name"
+                       filter_domain="[('name', 'ilike', self)]"/>
+                <field name="phone" string="Phone"
+                       filter_domain="[('phone', 'ilike', self)]"/>
+                <field name="personal_doctor_id"/>
+                <field name="family_doctor_id"/>
+            </search>
+        </field>
+    </record>
+
     <record id="action_hr_hospital_patient_window" model="ir.actions.act_window">
         <field name="name">Patients</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">hr.hospital.patient</field>
         <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="hr_hospital_patient_search"/>
     </record>
 </odoo>

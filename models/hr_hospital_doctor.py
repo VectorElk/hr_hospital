@@ -11,6 +11,8 @@ class HrHospitalDoctor(models.Model):
     position = fields.Char(required=True)
     is_family_doctor = fields.Boolean(default=False)
     is_intern = fields.Boolean(compute='_compute_is_intern', store=True)
+    intern_count = fields.Integer(compute='_compute_intern_display', store=False)
+    intern_display_names = fields.Char(compute='_compute_intern_display', store=False)
 
     res_patient_ids = fields.One2many(
         comodel_name='hr.hospital.patient',
@@ -35,6 +37,25 @@ class HrHospitalDoctor(models.Model):
         domain=[('is_intern', '=', False)],
     )
 
+    res_intern_ids = fields.One2many(
+        comodel_name='hr.hospital.doctor',
+        inverse_name='res_mentor_id',
+        string='Interns',
+    )
+
+    def action_quick_create_visit(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'New Visit',
+            'res_model': 'hr.hospital.visit',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'default_res_doctor_id': self.id,
+            },
+        }
+
     @api.onchange('is_intern')
     def _onchange_is_intern(self):
         if not self.is_intern:
@@ -48,6 +69,13 @@ class HrHospitalDoctor(models.Model):
         intern_category_id = intern_category.id if intern_category else False
         for record in self:
             record.is_intern = bool(record.res_doctor_category_id.id == intern_category_id)
+
+    @api.depends('res_intern_ids', 'res_intern_ids.name')
+    def _compute_intern_display(self):
+        for record in self:
+            intern_names = record.res_intern_ids.mapped('name')
+            record.intern_count = len(intern_names)
+            record.intern_display_names = ', '.join(intern_names)
 
     @api.constrains('is_intern', 'res_mentor_id')
     def _check_mentor_rules(self):
