@@ -1,5 +1,4 @@
-
-from odoo import Command, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -11,25 +10,20 @@ class HrHospitalVisitReportWizard(models.TransientModel):
         comodel_name='hr.hospital.doctor',
         string='Doctors',
     )
-    patient_ids = fields.Many2many(
-        comodel_name='hr.hospital.patient',
-        string='Patients',
-    )
-    date_start = fields.Date(string='Date Start')
-    date_end = fields.Date(string='Date End')
-    only_completed = fields.Boolean(string='Only Completed Visits')
-    condition_id = fields.Many2one(
+    condition_ids = fields.Many2many(
         comodel_name='hr.hospital.condition',
-        string='Condition',
+        string='Conditions',
     )
+    date_start = fields.Date(string='Date From')
+    date_end = fields.Date(string='Date To')
 
     @api.constrains('date_start', 'date_end')
     def _check_date_range(self):
         for record in self:
             if record.date_start and record.date_end:
-                start_date = record.date_start
-                end_date = record.date_end
-                if start_date > end_date:
+                date_start = record.date_start
+                date_end = record.date_end
+                if date_start > date_end:
                     raise ValidationError('Date Start must be earlier than or equal to Date End.')
 
     def default_get(self, fields_list):
@@ -45,10 +39,7 @@ class HrHospitalVisitReportWizard(models.TransientModel):
         active_records = self.env[active_model].browse(active_ids)
 
         if active_model == 'hr.hospital.doctor' and 'doctor_ids' in fields_list:
-            result['doctor_ids'] = [Command.set(active_records.ids)]
-        if active_model == 'hr.hospital.patient' and 'patient_ids' in fields_list:
-            result['patient_ids'] = [Command.set(active_records.ids)]
-
+            result['doctor_ids'] = [(6, 0, active_records.ids)]
         return result
 
     def action_open_report(self):
@@ -57,16 +48,12 @@ class HrHospitalVisitReportWizard(models.TransientModel):
         domain = []
         if self.doctor_ids:
             domain.append(('res_doctor_id', 'in', self.doctor_ids.ids))
-        if self.patient_ids:
-            domain.append(('res_patient_id', 'in', self.patient_ids.ids))
         if self.date_start:
             domain.append(('date', '>=', self.date_start))
         if self.date_end:
             domain.append(('date', '<=', self.date_end))
-        if self.only_completed:
-            domain.append(('status', '=', '1'))
-        if self.condition_id:
-            domain.append(('condition_id', '=', self.condition_id.id))
+        if self.condition_ids:
+            domain.append(('condition_id', 'in', self.condition_ids.ids))
 
         return {
             'type': 'ir.actions.act_window',
@@ -76,6 +63,7 @@ class HrHospitalVisitReportWizard(models.TransientModel):
             'target': 'current',
             'domain': domain,
             'context': {
-                'search_default_completed': 1 if self.only_completed else 0,
+                **self.env.context,
+                'group_by': 'condition_id',
             },
         }

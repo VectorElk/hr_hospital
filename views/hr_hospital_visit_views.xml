@@ -1,5 +1,5 @@
 <odoo>
-    <record id="view_hr_hospital_visit_tree" model="ir.ui.view">
+    <record id="hr_hospital_visit_tree" model="ir.ui.view">
         <field name="name">hr.hospital.visit.tree</field>
         <field name="model">hr.hospital.visit</field>
         <field name="arch" type="xml">
@@ -14,18 +14,31 @@
         </field>
     </record>
 
-    <record id="view_hr_hospital_visit_form" model="ir.ui.view">
+    <record id="hr_hospital_visit_form" model="ir.ui.view">
         <field name="name">hr.hospital.visit.form</field>
         <field name="model">hr.hospital.visit</field>
         <field name="arch" type="xml">
             <form>
+                <header>
+                    <button name="action_view_same_condition_visits"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-stethoscope"
+                            invisible="not id or not condition_id">
+                        <field name="same_condition_visit_count"
+                               widget="statinfo"
+                               string=" Same Condition Visits"/>
+                    </button>
+                </header>
                 <sheet>
                     <group>
                         <group string="Schedule">
                             <field name="date"/>
                             <field name="planned_date"/>
                             <field name="visit_time"/>
-                            <field name="status"/>
+                            <field name="status"
+                                widget="statusbar"
+                                options="{'clickable': '1'}"/>
                             <field name="active"/>
                         </group>
                         <group string="Participants">
@@ -35,16 +48,118 @@
                         </group>
                     </group>
                     <group string="Summary">
-                        <field name="summary" nolabel="1"/>
+                        <field name="summary"
+                               nolabel="1"
+                               widget="html"
+                               colspan="2"
+                               placeholder="Add visit summary..."/>
                     </group>
                 </sheet>
             </form>
         </field>
     </record>
 
+    <record id="hr_hospital_visit_search" model="ir.ui.view">
+        <field name="name">hr.hospital.visit.search</field>
+        <field name="model">hr.hospital.visit</field>
+        <field name="arch" type="xml">
+            <search string="Search Visits">
+                <field name="res_patient_id"/>
+                <field name="res_doctor_id"/>
+                <field name="condition_id"/>
+                <field name="date"/>
+                <filter string="Planned Date" name="planned_date" date="planned_date" default_period="year"/>
+                <filter string="Active" name="active" domain="[('active', '=', True)]"/>
+                <filter string="Archived" name="archived" domain="[('active', '=', False)]"/>
+                <group>
+                    <filter string="Status" name="group_by_status" domain="[]" context="{'group_by': 'status'}"/>
+                </group>
+                <searchpanel>
+                    <field name="res_doctor_id" string="Doctor" icon="fa-user-md"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
+    <record id="hr_hospital_visit_pivot" model="ir.ui.view">
+        <field name="name">hr.hospital.visit.pivot</field>
+        <field name="model">hr.hospital.visit</field>
+        <field name="arch" type="xml">
+            <pivot string="Visits by Doctor and Status">
+                <field name="res_doctor_id" type="row"/>
+                <field name="status" type="col"/>
+                <field name="planned_date" type="col" interval="month"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="hr_hospital_visit_graph" model="ir.ui.view">
+        <field name="name">hr.hospital.visit.graph</field>
+        <field name="model">hr.hospital.visit</field>
+        <field name="arch" type="xml">
+            <graph string="Visits by Month" type="bar" stacked="1">
+                <field name="planned_date" interval="month" type="row"/>
+                <field name="condition_id" type="col"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="hr_hospital_visit_calendar" model="ir.ui.view">
+        <field name="name">hr.hospital.visit.calendar</field>
+        <field name="model">hr.hospital.visit</field>
+        <field name="arch" type="xml">
+            <calendar string="Visits"
+                      date_start="planned_date"
+                      color="condition_id"
+                      mode="month">
+                <field name="res_patient_id"/>
+                <field name="res_doctor_id"/>
+                <field name="condition_id"/>
+                <field name="status"/>
+            </calendar>
+        </field>
+    </record>
+
     <record id="action_hr_hospital_visit_window" model="ir.actions.act_window">
         <field name="name">Visits</field>
         <field name="res_model">hr.hospital.visit</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">list,pivot,graph,calendar,form</field>
+        <field name="search_view_id" ref="hr_hospital_visit_search"/>
+        <field name="context">{'search_default_planned_date': 1}</field>
+    </record>
+
+    <record id="action_hr_hospital_visit_window_list_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="hr_hospital_visit_tree"/>
+        <field name="act_window_id" ref="action_hr_hospital_visit_window"/>
+    </record>
+
+    <record id="action_hr_hospital_visit_window_pivot_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">pivot</field>
+        <field name="view_id" ref="hr_hospital_visit_pivot"/>
+        <field name="act_window_id" ref="action_hr_hospital_visit_window"/>
+    </record>
+
+    <record id="action_hr_hospital_visit_window_calendar_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="4"/>
+        <field name="view_mode">calendar</field>
+        <field name="view_id" ref="hr_hospital_visit_calendar"/>
+        <field name="act_window_id" ref="action_hr_hospital_visit_window"/>
+    </record>
+
+    <record id="action_hr_hospital_visit_window_graph_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="3"/>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="hr_hospital_visit_graph"/>
+        <field name="act_window_id" ref="action_hr_hospital_visit_window"/>
+    </record>
+
+    <record id="action_hr_hospital_visit_window_form_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="5"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="hr_hospital_visit_form"/>
+        <field name="act_window_id" ref="action_hr_hospital_visit_window"/>
     </record>
 </odoo>

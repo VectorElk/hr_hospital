@@ -1,5 +1,5 @@
 <odoo>
-    <record id="view_hr_hospital_condition_tree" model="ir.ui.view">
+    <record id="hr_hospital_condition_tree" model="ir.ui.view">
         <field name="name">hr.hospital.condition.tree</field>
         <field name="model">hr.hospital.condition</field>
         <field name="arch" type="xml">
@@ -12,7 +12,7 @@
         </field>
     </record>
 
-    <record id="view_hr_hospital_condition_form" model="ir.ui.view">
+    <record id="hr_hospital_condition_form" model="ir.ui.view">
         <field name="name">hr.hospital.condition.form</field>
         <field name="model">hr.hospital.condition</field>
         <field name="arch" type="xml">
@@ -36,10 +36,25 @@
         </field>
     </record>
 
+    <record id="hr_hospital_condition_search" model="ir.ui.view">
+        <field name="name">hr.hospital.condition.search</field>
+        <field name="model">hr.hospital.condition</field>
+        <field name="arch" type="xml">
+            <search string="Search Conditions">
+                <field name="name"/>
+                <field name="description"/>
+                <searchpanel>
+                    <field name="parent_id" string="Condition Tree" icon="fa-sitemap" select="one" hierarchize="1" enable_counters="1"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
     <record id="action_hr_hospital_condition_window" model="ir.actions.act_window">
         <field name="name">Conditions</field>
         <field name="res_model">hr.hospital.condition</field>
         <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="hr_hospital_condition_search"/>
     </record>
 </odoo>
 

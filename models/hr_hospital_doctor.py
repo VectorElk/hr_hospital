@@ -35,6 +35,25 @@ class HrHospitalDoctor(models.Model):
         domain=[('is_intern', '=', False)],
     )
 
+    res_intern_ids = fields.One2many(
+        comodel_name='hr.hospital.doctor',
+        inverse_name='res_mentor_id',
+        string='Interns',
+    )
+
+    def action_quick_create_visit(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'New Visit',
+            'res_model': 'hr.hospital.visit',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'default_res_doctor_id': self.id,
+            },
+        }
+
     @api.onchange('is_intern')
     def _onchange_is_intern(self):
         if not self.is_intern:
