@@ -1,4 +1,5 @@
 from psycopg2.errors import UniqueViolation
+
 from odoo.tests import TransactionCase, tagged
 
 
