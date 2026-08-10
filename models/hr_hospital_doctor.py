@@ -1,11 +1,16 @@
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 
 class HrHospitalDoctor(models.Model):
+    """Hospital Doctor records including staff, specialists, and interns.
+
+    Manages doctor information, their mentor/intern relationships, patient assignments,
+    and visit tracking. Supports role hierarchy from interns to fully qualified doctors.
+    """
     _name = 'hr.hospital.doctor'
     _inherit = 'hr.hospital.medic.info'
-    _description = 'Hospital Doctor'
+    _description = _('Hospital Doctor')
 
     name = fields.Char(required=True)
     position = fields.Char(required=True)
@@ -40,14 +45,18 @@ class HrHospitalDoctor(models.Model):
     res_intern_ids = fields.One2many(
         comodel_name='hr.hospital.doctor',
         inverse_name='res_mentor_id',
-        string='Interns',
+        string=_('Interns'),
     )
 
     def action_quick_create_visit(self):
-        self.ensure_one()
+        """Quick action to create a new visit for this doctor.
+
+        Returns:
+            dict: Action window for creating a new visit pre-filled with this doctor.
+        """
         return {
             'type': 'ir.actions.act_window',
-            'name': 'New Visit',
+            'name': _('New Visit'),
             'res_model': 'hr.hospital.visit',
             'view_mode': 'form',
             'target': 'new',
@@ -58,11 +67,16 @@ class HrHospitalDoctor(models.Model):
 
     @api.onchange('is_intern')
     def _onchange_is_intern(self):
+        """Clear mentor when doctor is no longer an intern."""
         if not self.is_intern:
             self.res_mentor_id = False
 
     @api.depends('res_doctor_category_id', 'res_doctor_category_id.name')
     def _compute_is_intern(self):
+        """Compute is_intern flag based on doctor category.
+
+        A doctor is considered an intern if their category matches the intern category.
+        """
         intern_category = self.env.ref(
             'hr_hospital.hr_hospital_doctor_category_intern', raise_if_not_found=False
         )
@@ -72,6 +86,10 @@ class HrHospitalDoctor(models.Model):
 
     @api.depends('res_intern_ids', 'res_intern_ids.name')
     def _compute_intern_display(self):
+        """Compute display fields for managed interns.
+
+        Sets intern_count and intern_display_names for doctors with interns.
+        """
         for record in self:
             intern_names = record.res_intern_ids.mapped('name')
             record.intern_count = len(intern_names)
@@ -79,11 +97,21 @@ class HrHospitalDoctor(models.Model):
 
     @api.constrains('is_intern', 'res_mentor_id')
     def _check_mentor_rules(self):
+        """Enforce mentor-intern relationship rules.
+
+        Validates that:
+        - Doctor cannot be their own mentor
+        - Only interns can have mentors
+        - Mentors must not be interns themselves
+
+        Raises:
+            ValidationError: If any mentor rule is violated.
+        """
         for record in self:
             mentor = record.res_mentor_id
             if mentor and mentor == record:
-                raise ValidationError('Doctor cannot be their own mentor.')
+                raise ValidationError(_('Doctor cannot be their own mentor.'))
             if mentor and not record.is_intern:
-                raise ValidationError('Only intern doctors can have a mentor.')
+                raise ValidationError(_('Only intern doctors can have a mentor.'))
             if mentor and mentor.is_intern:
-                raise ValidationError('Mentor cannot be an intern doctor.')
+                raise ValidationError(_('Mentor cannot be an intern doctor.'))

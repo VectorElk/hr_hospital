@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HR Hospital</title>
+    <style>
+      :root {
+        --primary: #875a7b;
+        --text: #2f2f2f;
+        --muted: #666;
+        --bg: #f7f7f9;
+        --card: #fff;
+        --border: #e3e3e8;
+      }
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        color: var(--text);
+        background: var(--bg);
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 32px 20px 48px;
+      }
+      .hero,
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+      }
+      .hero {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        gap: 24px;
+        align-items: center;
+        padding: 28px;
+        margin-bottom: 24px;
+      }
+      .hero img {
+        width: 120px;
+        height: 120px;
+        object-fit: contain;
+      }
+      h1,
+      h2,
+      h3 {
+        color: var(--primary);
+        margin-top: 0;
+      }
+      h1 {
+        margin-bottom: 8px;
+        font-size: 2.3rem;
+      }
+      .subtitle {
+        margin: 0;
+        color: var(--muted);
+        font-size: 1.05rem;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 20px;
+      }
+      .card {
+        padding: 22px;
+      }
+      ul {
+        padding-left: 20px;
+        margin-bottom: 0;
+      }
+      .steps ol {
+        padding-left: 22px;
+      }
+      .footer-note {
+        margin-top: 24px;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+      code {
+        background: #f0f0f5;
+        border-radius: 4px;
+        padding: 0 4px;
+      }
+      a {
+        color: var(--primary);
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      @media (max-width: 640px) {
+        .hero {
+          grid-template-columns: 1fr;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <section class="hero">
+        <img src="icon.png" alt="HR Hospital icon" />
+        <div>
+          <h1>HR Hospital</h1>
+          <p class="subtitle">A hospital management addon for Odoo School with patients, doctors, visits, diseases, reports, and role-based access.</p>
+        </div>
+      </section>
+
+      <div class="grid">
+        <section class="card">
+          <h2>Highlights</h2>
+          <ul>
+            <li>Patient, doctor, visit, and condition management.</li>
+            <li>Calendar, list, pivot, graph, kanban, and search views.</li>
+            <li>Wizard-based visit reports and doctor PDF reports.</li>
+            <li>Role hierarchy: Patient → Intern → Doctor → Manager → Administrator.</li>
+            <li>Ukrainian translations for the module and disease classifier.</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <h2>Security model</h2>
+          <ul>
+            <li>Patients can read only their own visits.</li>
+            <li>Interns can read and write their own visits.</li>
+            <li>Doctors can manage their own visits and intern visits.</li>
+            <li>Managers can read all visits.</li>
+            <li>Administrators can delete any module data when business rules allow it.</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <h2>Installation</h2>
+          <ol>
+            <li>Copy <code>hr_hospital</code> into your Odoo addons path.</li>
+            <li>Update the apps list in Odoo.</li>
+            <li>Install the module from Apps.</li>
+            <li>Use the bundled <code>upgrade_addon.sh</code> script for local upgrades if needed.</li>
+          </ol>
+        </section>
+
+        <section class="card steps">
+          <h2>Included UI</h2>
+          <ul>
+            <li>Main menu and model actions.</li>
+            <li>Doctor report available from the Print menu.</li>
+            <li>Visit report wizard available from list and form views.</li>
+            <li>Module icon packaged for the Odoo Apps page.</li>
+          </ul>
+        </section>
+      </div>
+
+      <p class="footer-note">
+        Built for Odoo 19.0 and aligned with the module documentation and security tasks in this repository.
+      </p>
+    </div>
+  </body>
+</html>
+

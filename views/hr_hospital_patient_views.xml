@@ -48,6 +48,7 @@
                         </group>
                         <group string="Contact &amp; Doctors">
                             <field name="phone"/>
+                            <field name="res_system_user_id"/>
                             <field name="insurance_contact"/>
                             <field name="insurance_policy_number"/>
                             <field name="emergency_contact"/>
